@@ -34,6 +34,7 @@ if [ "$ROLE" == "client" ]; then
         echo "Requests: " $REQUESTS
         for REQ in $REQUESTS; do
             FILE=`echo $REQ | cut -f4 -d'/'`
+            echo "parsing <$REQ> as <$FILE>"
             FILELIST=${FILELIST}"/"${FILE}";"
         done
 
@@ -47,12 +48,14 @@ if [ "$ROLE" == "client" ]; then
             echo "File1: $FILE1"
             echo "File2: $FILE2"
             rm *.bin
-            if [/picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE1 .ne 0]; then
+            /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE1
+            if [ $? != 0 ]; then
                 RET=1
                 echo "First call to picoquicdemo failed"
-            else 
+            else
                 mv $LOGFILE $L1
-                if [/picoquic/picoquicdemo $TEST_PARAMS server 443 $FILES .ne 0] then
+                /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILES
+                if [ $? != 0 ]; then
                     RET=1
                     echo "Second call to picoquicdemo failed"
                 fi
@@ -62,11 +65,12 @@ if [ "$ROLE" == "client" ]; then
                 rm $L2
             fi
         else
-            if [ "$TESTCASE == "retry" ]; then
+            if [ "$TESTCASE" == "retry" ]; then
                 rm *.bin
             fi
             FILES=\"$FILELIST\"
-            if [ /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILES .ne 0]; then
+            /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILES
+            if [ $? != 0 ]; then
                 RET=1
                 echo "Call to picoquicdemo failed"
             fi
@@ -97,7 +101,8 @@ elif [ "$ROLE" == "server" ]; then
     esac
     echo "Starting picoquic server ..."
     echo "TEST_PARAMS: $TEST_PARAMS"
-    if [picoquic/picoquicdemo $TEST_PARAMS .ne 0]; then
+    picoquic/picoquicdemo $TEST_PARAMS
+    if [ $? != 0 ]; then
         RET=1
         echo "Could not start picoquicdemo"
     fi
