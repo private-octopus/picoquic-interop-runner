@@ -11,6 +11,17 @@ echo "Setup.sh completed"
 # - CLIENT_PARAMS contains user-supplied command line parameters
 
 RET=0
+# Verify that the test case is supported 
+case "$TESTCASE" in
+        "versionnegotiation") RET=0 ;;
+        "handshake") RET=0 ;;
+        "transfer") RET=0 ;;
+        "retry") RET=0 ;;
+        "resumption") RET=0 ;;
+        "http3") RET=0 ;;
+        *) echo "Unsupported test case: $TESTCASE"; exit 128 ;;
+esac
+
 if [ "$ROLE" == "client" ]; then
     # Wait for the simulator to start up.
     echo "Waiting for  the simulator to start"
