@@ -19,7 +19,7 @@ case "$TESTCASE" in
         "retry") RET=0 ;;
         "resumption") RET=0 ;;
         "http3") RET=0 ;;
-        *) echo "Unsupported test case: $TESTCASE"; exit 128 ;;
+        *) echo "Unsupported test case: $TESTCASE"; exit 127 ;;
 esac
 
 if [ "$ROLE" == "client" ]; then
