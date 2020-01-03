@@ -52,8 +52,6 @@ if [ "$ROLE" == "client" ]; then
         if [ "$TESTCASE" == "resumption" ]; then
             FILE1=`echo $FILELIST | cut -f1 -d";"`
             FILE2=`echo $FILELIST | cut -f2- -d";"`
-            FILE1="\"$FILE1\""
-            FILES="\"$FILE2\""
             L1="first_$LOGFILE"
             L2="second_$LOGFILE"
             echo "File1: $FILE1"
@@ -65,7 +63,7 @@ if [ "$ROLE" == "client" ]; then
                 echo "First call to picoquicdemo failed"
             else
                 mv $LOGFILE $L1
-                /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILES
+                /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2
                 if [ $? != 0 ]; then
                     RET=1
                     echo "Second call to picoquicdemo failed"
@@ -79,8 +77,7 @@ if [ "$ROLE" == "client" ]; then
             if [ "$TESTCASE" == "retry" ]; then
                 rm *.bin
             fi
-            FILES=\"$FILELIST\"
-            /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILES
+            /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILELIST
             if [ $? != 0 ]; then
                 RET=1
                 echo "Call to picoquicdemo failed"
