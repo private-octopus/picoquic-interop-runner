@@ -85,9 +85,9 @@ if [ "$ROLE" == "client" ]; then
         fi
         DOWNLOADS=`ls _*`
         if [ ! -z "$DOWNLOADS" ]; then
-            for FILE in `ls $1`; do
+            for FILE in $DOWNLOADS; do
                 TARGET=`echo $FILE | cut -b2-`
-                cp $FILE /download/$TARGET
+                cp $FILE /downloads/$TARGET
             done
         fi
         echo "Picoquic LOG: "
