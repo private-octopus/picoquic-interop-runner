@@ -27,7 +27,7 @@ if [ "$ROLE" == "client" ]; then
     echo "Waiting for  the simulator to start"
     /wait-for-it.sh sim:57832 -s -t 30
     echo "Starting picoquic client for test: $TESTCASE"
-    LOGFILE="test_log.txt"
+    LOGFILE="/logs/test_log.txt"
     TEST_PARAMS="$CLIENT_PARAMS -l $LOGFILE"
     if [ "$TESTCASE" == "http3" ]; then
         TEST_PARAMS="$TEST_PARAMS -a h3-24";
@@ -52,8 +52,8 @@ if [ "$ROLE" == "client" ]; then
         if [ "$TESTCASE" == "resumption" ]; then
             FILE1=`echo $FILELIST | cut -f1 -d";"`
             FILE2=`echo $FILELIST | cut -f2- -d";"`
-            L1="first_$LOGFILE"
-            L2="second_$LOGFILE"
+            L1="/logs/first_$LOGFILE"
+            L2="/logs/second_$LOGFILE"
             echo "File1: $FILE1"
             echo "File2: $FILE2"
             rm *.bin
@@ -98,7 +98,7 @@ if [ "$ROLE" == "client" ]; then
 ### Server side ###
 elif [ "$ROLE" == "server" ]; then
     echo "Starting picoquic server for test:" $TESTCASE
-    TEST_PARAMS="$SERVER_PARAMS -l server_log.txt -w /www"
+    TEST_PARAMS="$SERVER_PARAMS -l /logs/server_log.txt -w /www"
     TEST_PARAMS="$TEST_PARAMS -k picoquic/certs/key.pem"
     TEST_PARAMS="$TEST_PARAMS -c picoquic/certs/cert.pem"
     TEST_PARAMS="$TEST_PARAMS -p 443"
