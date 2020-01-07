@@ -5,6 +5,16 @@ FROM martenseemann/quic-network-simulator-endpoint:latest
 USER root
 WORKDIR /
 
+COPY dkr-prereq.sh .
+RUN chmod +x ./dkr-prereq.sh
+RUN ./dkr-prereq.sh
+
+ARG PICOTLS_DATE=2020-01-05
+COPY dkr-picotls.sh .
+RUN chmod +x ./dkr-picotls.sh
+RUN ./dkr-picotls.sh
+
+ARG PICOQUIC_DATE=2020-01-06
 COPY dkr-install.sh .
 RUN chmod +x ./dkr-install.sh
 RUN ./dkr-install.sh
