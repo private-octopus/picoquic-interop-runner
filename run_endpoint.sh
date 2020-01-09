@@ -27,8 +27,9 @@ if [ "$ROLE" == "client" ]; then
     echo "Waiting for  the simulator to start"
     /wait-for-it.sh sim:57832 -s -t 30
     echo "Starting picoquic client for test: $TESTCASE"
+    # setup default parameters
     LOGFILE="/logs/test_log.txt"
-    TEST_PARAMS="$CLIENT_PARAMS -I 2 -l $LOGFILE"
+    TEST_PARAMS="$CLIENT_PARAMS -l $LOGFILE"
     if [ "$TESTCASE" == "http3" ]; then
         TEST_PARAMS="$TEST_PARAMS -a h3-24";
     else
