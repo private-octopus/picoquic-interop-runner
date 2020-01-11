@@ -47,7 +47,7 @@ if [ "$ROLE" == "client" ]; then
         for REQ in $REQUESTS; do
             FILE=`echo $REQ | cut -f4 -d'/'`
             echo "parsing <$REQ> as <$FILE>"
-            FILELIST=${FILELIST}"/"${FILE}";"
+            FILELIST=${FILELIST}"-:/"${FILE}";"
         done
 
         if [ "$TESTCASE" == "resumption" ]; then
