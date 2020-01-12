@@ -32,8 +32,6 @@ if [ "$ROLE" == "client" ]; then
     TEST_PARAMS="$CLIENT_PARAMS -l $LOGFILE"
     if [ "$TESTCASE" == "http3" ]; then
         TEST_PARAMS="$TEST_PARAMS -a h3-24";
-    else
-        TEST_PARAMS="$TEST_PARAMS -a hq-24";
     fi
     if [ "$TESTCASE" == "versionnegotiation" ]; then
         TEST_PARAMS="$TEST_PARAMS -v 5a6a7a8a";
