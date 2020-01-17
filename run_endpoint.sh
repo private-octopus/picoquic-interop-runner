@@ -19,6 +19,7 @@ case "$TESTCASE" in
         "retry") RET=0 ;;
         "resumption") RET=0 ;;
         "http3") RET=0 ;;
+        "multiconnect") RET=0 ;;
         *) echo "Unsupported test case: $TESTCASE"; exit 127 ;;
 esac
 
@@ -56,12 +57,14 @@ if [ "$ROLE" == "client" ]; then
             echo "File1: $FILE1"
             echo "File2: $FILE2"
             rm *.bin
+            echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE1"
             /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE1
             if [ $? != 0 ]; then
                 RET=1
                 echo "First call to picoquicdemo failed"
             else
                 mv $LOGFILE $L1
+                echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2"
                 /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2
                 if [ $? != 0 ]; then
                     RET=1
@@ -72,6 +75,13 @@ if [ "$ROLE" == "client" ]; then
                 rm $L1
                 rm $L2
             fi
+        elif [ "$TESTCASE" == "multiconnect" ]; then
+            for CREQ in $REQUESTS; do
+                CFILE=`echo $CREQ | cut -f4 -d'/'`
+                CFILEX="/$CFILE"
+                echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $CFILEX"
+                /picoquic/picoquicdemo $TEST_PARAMS server 443 $CFILEX
+            done
         else
             if [ "$TESTCASE" == "retry" ]; then
                 rm *.bin
