@@ -81,6 +81,13 @@ if [ "$ROLE" == "client" ]; then
                 CFILEX="/$CFILE"
                 echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $CFILEX"
                 /picoquic/picoquicdemo $TEST_PARAMS server 443 $CFILEX
+                if [ $? != 0 ]; then
+                    RET=1
+                    echo "Call to picoquicdemo failed"
+                fi
+                MCLOG="/logs/mc-$CFILE.txt"
+                echo "mv $LOGFILE  $MCLOG"
+                mv $LOGFILE $MCLOG
             done
         else
             if [ "$TESTCASE" == "retry" ]; then
