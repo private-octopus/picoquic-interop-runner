@@ -114,7 +114,7 @@ if [ "$ROLE" == "client" ]; then
 ### Server side ###
 elif [ "$ROLE" == "server" ]; then
     echo "Starting picoquic server for test:" $TESTCASE
-    TEST_PARAMS="$SERVER_PARAMS -l /logs/server_log.txt -w /www"
+    TEST_PARAMS="$SERVER_PARAMS -L -l /logs/server_log.txt -w /www"
     TEST_PARAMS="$TEST_PARAMS -k picoquic/certs/key.pem"
     TEST_PARAMS="$TEST_PARAMS -c picoquic/certs/cert.pem"
     TEST_PARAMS="$TEST_PARAMS -p 443"
