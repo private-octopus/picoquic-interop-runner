@@ -30,9 +30,9 @@ if [ "$ROLE" == "client" ]; then
     echo "Starting picoquic client for test: $TESTCASE"
     # setup default parameters
     LOGFILE="/logs/test_log.txt"
-    TEST_PARAMS="$CLIENT_PARAMS -l $LOGFILE"
+    TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE"
     if [ "$TESTCASE" == "http3" ]; then
-        TEST_PARAMS="$TEST_PARAMS -a h3-24";
+        TEST_PARAMS="$TEST_PARAMS -a h3-25";
     fi
     if [ "$TESTCASE" == "versionnegotiation" ]; then
         TEST_PARAMS="$TEST_PARAMS -v 5a6a7a8a";
@@ -106,8 +106,6 @@ if [ "$ROLE" == "client" ]; then
                 cp $FILE /downloads/$TARGET
             done
         fi
-        echo "Picoquic LOG: "
-        cat $LOGFILE
         # cleanup
     fi
 
