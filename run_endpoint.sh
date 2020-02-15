@@ -52,8 +52,8 @@ if [ "$ROLE" == "client" ]; then
         if [ "$TESTCASE" == "resumption" ]; then
             FILE1=`echo $FILELIST | cut -f1 -d";"`
             FILE2=`echo $FILELIST | cut -f2- -d";"`
-            L1="/logs/first_$LOGFILE"
-            L2="/logs/second_$LOGFILE"
+            L1="/logs/first_log.txt"
+            L2="/logs/second_log.txt"
             echo "File1: $FILE1"
             echo "File2: $FILE2"
             rm *.bin
@@ -71,9 +71,6 @@ if [ "$ROLE" == "client" ]; then
                     echo "Second call to picoquicdemo failed"
                 fi
                 mv $LOGFILE $L2
-                cat $L1 $L2 > $LOGFILE
-                rm $L1
-                rm $L2
             fi
         elif [ "$TESTCASE" == "multiconnect" ]; then
             for CREQ in $REQUESTS; do
