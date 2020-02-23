@@ -37,7 +37,7 @@ if [ "$ROLE" == "client" ]; then
     if [ "$TESTCASE" == "versionnegotiation" ]; then
         TEST_PARAMS="$TEST_PARAMS -v 5a6a7a8a";
     else
-        TEST_PARAMS="$TEST_PARAMS -v ff000019";
+        TEST_PARAMS="$TEST_PARAMS -v ff00001b";
     fi
     echo "Starting picoquic client ..."
     if [ ! -z "$REQUESTS" ]; then
