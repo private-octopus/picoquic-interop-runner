@@ -32,7 +32,7 @@ if [ "$ROLE" == "client" ]; then
     LOGFILE="/logs/test_log.txt"
     TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE"
     if [ "$TESTCASE" == "http3" ]; then
-        TEST_PARAMS="$TEST_PARAMS -a h3-25";
+        TEST_PARAMS="$TEST_PARAMS -a h3-27";
     fi
     if [ "$TESTCASE" == "versionnegotiation" ]; then
         TEST_PARAMS="$TEST_PARAMS -v 5a6a7a8a";
@@ -110,7 +110,7 @@ if [ "$ROLE" == "client" ]; then
 elif [ "$ROLE" == "server" ]; then
     echo "Starting picoquic server for test:" $TESTCASE
     TEST_PARAMS="$SERVER_PARAMS -w ./www -L -l /logs/server_log.txt"
-    TEST_PARAMS="$TEST_PARAMS -g /logs" 
+    TEST_PARAMS="$TEST_PARAMS -b /logs/server_log.bin" 
     TEST_PARAMS="$TEST_PARAMS -k picoquic/certs/key.pem"
     TEST_PARAMS="$TEST_PARAMS -c picoquic/certs/cert.pem"
     TEST_PARAMS="$TEST_PARAMS -p 443"
