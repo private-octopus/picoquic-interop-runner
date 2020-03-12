@@ -18,6 +18,7 @@ case "$TESTCASE" in
         "transfer") RET=0 ;;
         "retry") RET=0 ;;
         "resumption") RET=0 ;;
+        "zerortt") RET=0 ;;
         "http3") RET=0 ;;
         "multiconnect") RET=0 ;;
         *) echo "Unsupported test case: $TESTCASE"; exit 127 ;;
@@ -49,7 +50,8 @@ if [ "$ROLE" == "client" ]; then
             FILELIST=${FILELIST}"-:/"${FILE}";"
         done
 
-        if [ "$TESTCASE" == "resumption" ]; then
+        if [ "$TESTCASE" == "resumption" ] ||
+           [ "$TESTCASE" == "zerortt" ] ; then
             FILE1=`echo $FILELIST | cut -f1 -d";"`
             FILE2=`echo $FILELIST | cut -f2- -d";"`
             L1="/logs/first_log.txt"
