@@ -31,7 +31,7 @@ if [ "$ROLE" == "client" ]; then
     echo "Starting picoquic client for test: $TESTCASE"
     # setup default parameters
     LOGFILE="/logs/test_log.txt"
-    TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE"
+    TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE -o /downloads"
     if [ "$TESTCASE" == "http3" ]; then
         TEST_PARAMS="$TEST_PARAMS -a h3-27";
     fi
@@ -98,14 +98,6 @@ if [ "$ROLE" == "client" ]; then
                 echo "Call to picoquicdemo failed"
             fi
         fi
-        DOWNLOADS=`ls _*`
-        if [ ! -z "$DOWNLOADS" ]; then
-            for FILE in $DOWNLOADS; do
-                TARGET=`echo $FILE | cut -b2-`
-                cp $FILE /downloads/$TARGET
-            done
-        fi
-        # cleanup
     fi
 
 ### Server side ###
