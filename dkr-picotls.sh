@@ -1,5 +1,8 @@
 # !/bin/bash.sh
 
+apt-get update
+apt-get -y install git
+
 export CXX=g++
 export CC=gcc
 

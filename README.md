@@ -10,7 +10,7 @@ To update the docker container:
 
 3) Build the new version of the docker container:
 ```
-sudo docker build -t privateoctopus/picoquic ../picoquic-interop-runner/
+sudo docker build --build-arg PICOQUIC_DATE=2020-04-27 -t privateoctopus/picoquic ../picoquic-interop-runner/
 ```
 
 4) Upload the new docker container:
