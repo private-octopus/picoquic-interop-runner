@@ -31,7 +31,7 @@ if [ "$ROLE" == "client" ]; then
     echo "Starting picoquic client for test: $TESTCASE"
     # setup default parameters
     LOGFILE="/logs/test_log.txt"
-    TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE -o /downloads"
+    TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE -b /logs/client_bin.log -o /downloads"
     if [ "$TESTCASE" == "http3" ]; then
         TEST_PARAMS="$TEST_PARAMS -a h3-27";
     fi
@@ -66,6 +66,7 @@ if [ "$ROLE" == "client" ]; then
                 echo "First call to picoquicdemo failed"
             else
                 mv $LOGFILE $L1
+                /picoquic/picolog -f qlog -o /logs/qlog /logs/client_log.bin
                 echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2"
                 /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2
                 if [ $? != 0 ]; then
@@ -74,6 +75,7 @@ if [ "$ROLE" == "client" ]; then
                 fi
                 mv $LOGFILE $L2
             fi
+            /picoquic/picolog -f qlog -o /logs/qlog /logs/client_log.bin
         elif [ "$TESTCASE" == "multiconnect" ]; then
             for CREQ in $REQUESTS; do
                 CFILE=`echo $CREQ | cut -f4 -d'/'`
@@ -84,6 +86,7 @@ if [ "$ROLE" == "client" ]; then
                     RET=1
                     echo "Call to picoquicdemo failed"
                 fi
+                /picoquic/picolog -f qlog -o /logs/qlog /logs/client_log.bin
                 MCLOG="/logs/mc-$CFILE.txt"
                 echo "mv $LOGFILE  $MCLOG"
                 mv $LOGFILE $MCLOG
@@ -97,6 +100,7 @@ if [ "$ROLE" == "client" ]; then
                 RET=1
                 echo "Call to picoquicdemo failed"
             fi
+            /picoquic/picolog -f qlog -o /logs/qlog /logs/client_log.bin
         fi
     fi
 
@@ -120,6 +124,7 @@ elif [ "$ROLE" == "server" ]; then
         RET=1
         echo "Could not start picoquicdemo"
     fi
+    /picoquic/picolog -f qlog -o /logs/qlog /logs/server_log.bin
 else
     echo "Unexpected role: $ROLE"
     RET=1
