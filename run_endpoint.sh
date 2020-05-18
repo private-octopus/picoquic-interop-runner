@@ -21,6 +21,7 @@ case "$TESTCASE" in
         "zerortt") RET=0 ;;
         "http3") RET=0 ;;
         "multiconnect") RET=0 ;;
+        "chacha20") RET=0 ;;
         *) echo "Unsupported test case: $TESTCASE"; exit 127 ;;
 esac
 
@@ -39,6 +40,9 @@ if [ "$ROLE" == "client" ]; then
         TEST_PARAMS="$TEST_PARAMS -v 5a6a7a8a";
     else
         TEST_PARAMS="$TEST_PARAMS -v ff00001b";
+    fi
+    if [ "$TESTCASE" == "chacha20" ]; then
+        TEST_PARAMS="$TEST_PARAMS -C 20";
     fi
     echo "Starting picoquic client ..."
     if [ ! -z "$REQUESTS" ]; then
@@ -66,7 +70,7 @@ if [ "$ROLE" == "client" ]; then
                 echo "First call to picoquicdemo failed"
             else
                 mv $LOGFILE $L1
-                /picoquic/picolog -f qlog -o /logs/qlog /logs/client_log.bin
+                /picoquic/picolog_t -f qlog -o /logs/qlog /logs/client_log.bin
                 echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2"
                 /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2
                 if [ $? != 0 ]; then
@@ -75,7 +79,7 @@ if [ "$ROLE" == "client" ]; then
                 fi
                 mv $LOGFILE $L2
             fi
-            /picoquic/picolog -f qlog -o /logs/qlog /logs/client_log.bin
+            /picoquic/picolog_t -f qlog -o /logs/qlog /logs/client_log.bin
         elif [ "$TESTCASE" == "multiconnect" ]; then
             for CREQ in $REQUESTS; do
                 CFILE=`echo $CREQ | cut -f4 -d'/'`
@@ -86,7 +90,7 @@ if [ "$ROLE" == "client" ]; then
                     RET=1
                     echo "Call to picoquicdemo failed"
                 fi
-                /picoquic/picolog -f qlog -o /logs/qlog /logs/client_log.bin
+                /picoquic/picolog_t -f qlog -o /logs/qlog /logs/client_log.bin
                 MCLOG="/logs/mc-$CFILE.txt"
                 echo "mv $LOGFILE  $MCLOG"
                 mv $LOGFILE $MCLOG
@@ -100,7 +104,7 @@ if [ "$ROLE" == "client" ]; then
                 RET=1
                 echo "Call to picoquicdemo failed"
             fi
-            /picoquic/picolog -f qlog -o /logs/qlog /logs/client_log.bin
+            /picoquic/picolog_t -f qlog -o /logs/qlog /logs/client_log.bin
         fi
     fi
 
@@ -124,7 +128,7 @@ elif [ "$ROLE" == "server" ]; then
         RET=1
         echo "Could not start picoquicdemo"
     fi
-    /picoquic/picolog -f qlog -o /logs/qlog /logs/server_log.bin
+    /picoquic/picolog_t -f qlog -o /logs/qlog /logs/server_log.bin
 else
     echo "Unexpected role: $ROLE"
     RET=1
