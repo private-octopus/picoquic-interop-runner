@@ -32,7 +32,7 @@ if [ "$ROLE" == "client" ]; then
     echo "Starting picoquic client for test: $TESTCASE"
     # setup default parameters
     LOGFILE="/logs/test_log.txt"
-    TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE -b /logs/client_bin.log -o /downloads"
+    TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE -b /logs/client_log.bin -o /downloads"
     if [ "$TESTCASE" == "http3" ]; then
         TEST_PARAMS="$TEST_PARAMS -a h3-27";
     fi
