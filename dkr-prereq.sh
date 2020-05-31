@@ -1,5 +1,5 @@
 # !/bin/bash.sh
-
+apt-get -y update
 apt-get -y -q install build-essential
 apt-get -y -q install git
 apt-get -y -q install cmake
