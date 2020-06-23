@@ -128,6 +128,7 @@ elif [ "$ROLE" == "server" ]; then
         RET=1
         echo "Could not start picoquicdemo"
     fi
+    cp /var/crash/* /logs
     /picoquic/picolog_t -f qlog -o /logs/qlog /logs/server_log.bin
 else
     echo "Unexpected role: $ROLE"
