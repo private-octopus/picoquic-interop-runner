@@ -22,6 +22,8 @@ case "$TESTCASE" in
         "http3") RET=0 ;;
         "multiconnect") RET=0 ;;
         "chacha20") RET=0 ;;
+        "ecn") RET=0;;
+        "keyupdate") RET=0;;
         *) echo "Unsupported test case: $TESTCASE"; exit 127 ;;
 esac
 
@@ -43,6 +45,9 @@ if [ "$ROLE" == "client" ]; then
     fi
     if [ "$TESTCASE" == "chacha20" ]; then
         TEST_PARAMS="$TEST_PARAMS -C 20";
+    fi
+    if [ "$TESTCASE" == "keyupdate" ]; then
+        TEST_PARAMS="$TEST_PARAMS -u 32";
     fi
     echo "Starting picoquic client ..."
     if [ ! -z "$REQUESTS" ]; then
