@@ -114,8 +114,8 @@ elif [ "$ROLE" == "server" ]; then
     echo "Starting picoquic server for test:" $TESTCASE
     TEST_PARAMS="$SERVER_PARAMS -w ./www -L -l /logs/server_log.txt"
     TEST_PARAMS="$TEST_PARAMS -b /logs/server_log.bin" 
-    TEST_PARAMS="$TEST_PARAMS -k picoquic/certs/key.pem"
-    TEST_PARAMS="$TEST_PARAMS -c picoquic/certs/cert.pem"
+    TEST_PARAMS="$TEST_PARAMS -k /certs/priv.key"
+    TEST_PARAMS="$TEST_PARAMS -c /certs/cert.pem"
     TEST_PARAMS="$TEST_PARAMS -p 443"
     ls /www
     case "$TESTCASE" in
@@ -130,7 +130,6 @@ elif [ "$ROLE" == "server" ]; then
         echo "Could not start picoquicdemo"
     fi
     cp /var/crash/* /logs
-    /picoquic/picolog_t -f qlog -o /logs/qlog /logs/server_log.bin
 else
     echo "Unexpected role: $ROLE"
     RET=1
