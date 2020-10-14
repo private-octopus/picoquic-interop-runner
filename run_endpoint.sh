@@ -55,8 +55,9 @@ if [ "$ROLE" == "client" ]; then
         # Get the server ID out of the first request
         REQS=($REQUESTS)
         REQ1=${REQS[0]}
+        echo "Parsing server name from first request: $REQ1"
         SERVER=$(echo $REQ1 | cut -d/ -f3 | cut -d: -f1)
-        echo "Server set to $SERVER"
+        echo "Server set to: $SERVER"
         # pull requests out of param
         echo "Requests: " $REQUESTS
         for REQ in $REQUESTS; do
@@ -119,7 +120,7 @@ if [ "$ROLE" == "client" ]; then
 elif [ "$ROLE" == "server" ]; then
     echo "Starting picoquic server for test:" $TESTCASE
     TEST_PARAMS="$SERVER_PARAMS -w ./www -L -l /logs/server_log.txt"
-    TEST_PARAMS="$TEST_PARAMS -b /logs/server_log.bin" 
+    TEST_PARAMS="$TEST_PARAMS -q /logs/qlog" 
     TEST_PARAMS="$TEST_PARAMS -k /certs/priv.key"
     TEST_PARAMS="$TEST_PARAMS -c /certs/cert.pem"
     TEST_PARAMS="$TEST_PARAMS -p 443"
