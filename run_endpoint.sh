@@ -50,7 +50,11 @@ if [ "$ROLE" == "client" ]; then
         TEST_PARAMS="$TEST_PARAMS -u 32";
     fi
     echo "Starting picoquic client ..."
+    SERVER="server"
     if [ ! -z "$REQUESTS" ]; then
+        # Get the server ID out of the first request
+        SERVER=$(echo $REQ | cut -d/ -f3 | cut -d: -f1)
+        echo "Server set to $SERVER"
         # pull requests out of param
         echo "Requests: " $REQUESTS
         for REQ in $REQUESTS; do
@@ -68,15 +72,15 @@ if [ "$ROLE" == "client" ]; then
             echo "File1: $FILE1"
             echo "File2: $FILE2"
             rm *.bin
-            echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE1"
-            /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE1
+            echo "/picoquic/picoquicdemo $TEST_PARAMS $SERVER 443 $FILE1"
+            /picoquic/picoquicdemo $TEST_PARAMS $SERVER 443 $FILE1
             if [ $? != 0 ]; then
                 RET=1
                 echo "First call to picoquicdemo failed"
             else
                 mv $LOGFILE $L1
-                echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2"
-                /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILE2
+                echo "/picoquic/picoquicdemo $TEST_PARAMS $SERVER 443 $FILE2"
+                /picoquic/picoquicdemo $TEST_PARAMS $SERVER 443 $FILE2
                 if [ $? != 0 ]; then
                     RET=1
                     echo "Second call to picoquicdemo failed"
@@ -87,8 +91,8 @@ if [ "$ROLE" == "client" ]; then
             for CREQ in $REQUESTS; do
                 CFILE=`echo $CREQ | cut -f4 -d'/'`
                 CFILEX="/$CFILE"
-                echo "/picoquic/picoquicdemo $TEST_PARAMS server 443 $CFILEX"
-                /picoquic/picoquicdemo $TEST_PARAMS server 443 $CFILEX
+                echo "/picoquic/picoquicdemo $TEST_PARAMS $SERVER 443 $CFILEX"
+                /picoquic/picoquicdemo $TEST_PARAMS $SERVER 443 $CFILEX
                 if [ $? != 0 ]; then
                     RET=1
                     echo "Call to picoquicdemo failed"
@@ -101,7 +105,7 @@ if [ "$ROLE" == "client" ]; then
             if [ "$TESTCASE" == "retry" ]; then
                 rm *.bin
             fi
-            /picoquic/picoquicdemo $TEST_PARAMS server 443 $FILELIST
+            /picoquic/picoquicdemo $TEST_PARAMS $SERVER 443 $FILELIST
             if [ $? != 0 ]; then
                 RET=1
                 echo "Call to picoquicdemo failed"
