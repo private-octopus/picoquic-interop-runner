@@ -53,7 +53,7 @@ if [ "$ROLE" == "client" ]; then
     SERVER="server"
     if [ ! -z "$REQUESTS" ]; then
         # Get the server ID out of the first request
-        SERVER=$(echo $REQ | cut -d/ -f3 | cut -d: -f1)
+        SERVER=$(echo $REQUESTS | cut -d/ -f3 | cut -d: -f1)
         echo "Server set to $SERVER"
         # pull requests out of param
         echo "Requests: " $REQUESTS
