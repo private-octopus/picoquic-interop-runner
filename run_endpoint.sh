@@ -36,12 +36,12 @@ if [ "$ROLE" == "client" ]; then
     LOGFILE="/logs/test_log.txt"
     TEST_PARAMS="$CLIENT_PARAMS -L -l $LOGFILE -q /logs/qlog -o /downloads"
     if [ "$TESTCASE" == "http3" ]; then
-        TEST_PARAMS="$TEST_PARAMS -a h3-29";
+        TEST_PARAMS="$TEST_PARAMS -a h3-34";
     fi
     if [ "$TESTCASE" == "versionnegotiation" ]; then
         TEST_PARAMS="$TEST_PARAMS -v 5a6a7a8a";
     else
-        TEST_PARAMS="$TEST_PARAMS -v ff00001d";
+        TEST_PARAMS="$TEST_PARAMS -v 00000001";
     fi
     if [ "$TESTCASE" == "chacha20" ]; then
         TEST_PARAMS="$TEST_PARAMS -C 20";
