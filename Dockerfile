@@ -9,12 +9,12 @@ COPY dkr-prereq.sh .
 RUN chmod +x ./dkr-prereq.sh
 RUN ./dkr-prereq.sh
 
-ARG PICOTLS_DATE=2021-02-06
+ARG PICOTLS_DATE=2021-10-23
 COPY dkr-picotls.sh .
 RUN chmod +x ./dkr-picotls.sh
 RUN ./dkr-picotls.sh
 
-ARG PICOQUIC_DATE=2020-02-06
+ARG PICOQUIC_DATE=2020-10-23
 COPY dkr-install.sh .
 RUN chmod +x ./dkr-install.sh
 RUN ./dkr-install.sh
