@@ -24,6 +24,7 @@ case "$TESTCASE" in
         "chacha20") RET=0 ;;
         "ecn") RET=0;;
         "keyupdate") RET=0;;
+        "v2") RET=0;;
         *) echo "Unsupported test case: $TESTCASE"; exit 127 ;;
 esac
 
@@ -50,6 +51,9 @@ if [ "$ROLE" == "client" ]; then
     fi
     if [ "$TESTCASE" == "keyupdate" ]; then
         TEST_PARAMS="$TEST_PARAMS -u 32";
+    fi
+    if [ "$TESTCASE" == "v2" ]; then
+        TEST_PARAMS="$TEST_PARAMS -U 709a50c4";
     fi
     echo "Starting picoquic client ..."
     SERVER="server"
