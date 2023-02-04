@@ -53,7 +53,7 @@ if [ "$ROLE" == "client" ]; then
         TEST_PARAMS="$TEST_PARAMS -u 32";
     fi
     if [ "$TESTCASE" == "v2" ]; then
-        TEST_PARAMS="$TEST_PARAMS -U 709a50c4";
+        TEST_PARAMS="$TEST_PARAMS -U 6b3343cf";
     fi
     echo "Starting picoquic client ..."
     SERVER="server"

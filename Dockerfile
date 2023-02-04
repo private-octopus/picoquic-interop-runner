@@ -5,6 +5,9 @@ FROM martenseemann/quic-network-simulator-endpoint:latest AS builder
 USER root
 WORKDIR /
 
+RUN echo "Hello"
+RUN cat /etc/fstab
+
 COPY dkr-prereq.sh .
 RUN chmod +x ./dkr-prereq.sh
 RUN ./dkr-prereq.sh
