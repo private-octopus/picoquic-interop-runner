@@ -129,7 +129,7 @@ elif [ "$ROLE" == "server" ]; then
     TEST_PARAMS="$TEST_PARAMS -q /logs/qlog" 
     TEST_PARAMS="$TEST_PARAMS -k /certs/priv.key"
     TEST_PARAMS="$TEST_PARAMS -c /certs/cert.pem"
-    TEST_PARAMS="$TEST_PARAMS -p 443 -V -0"
+    TEST_PARAMS="$TEST_PARAMS -p 443 -V -0 -d 180000"
     ls /www
     case "$TESTCASE" in
         "retry") TEST_PARAMS="$TEST_PARAMS -r" ;;
