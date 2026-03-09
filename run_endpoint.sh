@@ -25,6 +25,8 @@ case "$TESTCASE" in
         "ecn") RET=0;;
         "keyupdate") RET=0;;
         "v2") RET=0;;
+        "rebind-port") RET=0;;
+        "rebind-address") RET=0;;
         *) echo "Unsupported test case: $TESTCASE"; exit 127 ;;
 esac
 
@@ -35,7 +37,7 @@ if [ "$ROLE" == "client" ]; then
     echo "Starting picoquic client for test: $TESTCASE"
     # setup default parameters
     LOGFILE="/logs/test_log.txt"
-    TEST_PARAMS="$CLIENT_PARAMS -8 -L -l $LOGFILE -q /logs/qlog -o /downloads -0 -d 180000"
+    TEST_PARAMS="$CLIENT_PARAMS -8 -L -l $LOGFILE -q /logs/qlog -o /downloads -0 -d 180000 -G c4"
     if [ "$TESTCASE" == "http3" ]; then
         TEST_PARAMS="$TEST_PARAMS -a h3";
     else
@@ -55,6 +57,7 @@ if [ "$ROLE" == "client" ]; then
     if [ "$TESTCASE" == "v2" ]; then
         TEST_PARAMS="$TEST_PARAMS -U 6b3343cf";
     fi
+
     echo "Starting picoquic client ..."
     SERVER="server"
     if [ ! -z "$REQUESTS" ]; then
@@ -129,7 +132,7 @@ elif [ "$ROLE" == "server" ]; then
     TEST_PARAMS="$TEST_PARAMS -q /logs/qlog" 
     TEST_PARAMS="$TEST_PARAMS -k /certs/priv.key"
     TEST_PARAMS="$TEST_PARAMS -c /certs/cert.pem"
-    TEST_PARAMS="$TEST_PARAMS -p 443 -V -0 -d 180000"
+    TEST_PARAMS="$TEST_PARAMS -p 443 -V -0 -d 180000 -G c4"
     ls /www
     case "$TESTCASE" in
         "retry") TEST_PARAMS="$TEST_PARAMS -r" ;;
