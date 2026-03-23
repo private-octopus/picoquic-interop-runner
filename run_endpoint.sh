@@ -27,6 +27,7 @@ case "$TESTCASE" in
         "v2") RET=0;;
         "rebind-port") RET=0;;
         "rebind-address") RET=0;;
+        "connectionmigration") RET=0;;
         *) echo "Unsupported test case: $TESTCASE"; exit 127 ;;
 esac
 
@@ -128,16 +129,21 @@ if [ "$ROLE" == "client" ]; then
 ### Server side ###
 elif [ "$ROLE" == "server" ]; then
     echo "Starting picoquic server for test:" $TESTCASE
+    ADDRV4=`getent ahostv4 server4 | grep DGRAM | head -n1 | awk '{print $1}'`
+    echo "IPv4 server address: $ADDRV4"
+    ADDRV6=`getent ahostv6 server6 | grep DGRAM | head -n1 | awk '{print $1}'`
+    echo "IPv6 server address: $ADDRV6"
     TEST_PARAMS="$SERVER_PARAMS -8 -w ./www -L -l /logs/server_log.txt"
     TEST_PARAMS="$TEST_PARAMS -q /logs/qlog" 
     TEST_PARAMS="$TEST_PARAMS -k /certs/priv.key"
     TEST_PARAMS="$TEST_PARAMS -c /certs/cert.pem"
-    TEST_PARAMS="$TEST_PARAMS -p 443 -V -0 -d 180000 -G c4"
     ls /www
     case "$TESTCASE" in
-        "retry") TEST_PARAMS="$TEST_PARAMS -r" ;;
-        *) ;;
+        "retry") TEST_PARAMS="$TEST_PARAMS -r -p 443" ;;
+        "connectionmigration") TEST_PARAMS="$TEST_PARAMS -r -p '443:4433' -4 $ADDRV4 -6 $ADDRV6" ;;
+        *) TEST_PARAMS="$TEST_PARAMS -p 443" ;;
     esac
+    TEST_PARAMS="$TEST_PARAMS -p 443 -V -0 -d 180000 -G c4"
     echo "Starting picoquic server ..."
     echo "TEST_PARAMS: $TEST_PARAMS"
     picoquic/picoquicdemo $TEST_PARAMS
