@@ -140,10 +140,10 @@ elif [ "$ROLE" == "server" ]; then
     ls /www
     case "$TESTCASE" in
         "retry") TEST_PARAMS="$TEST_PARAMS -r -p 443" ;;
-        "connectionmigration") TEST_PARAMS="$TEST_PARAMS -r -p '443:4433' -4 $ADDRV4 -6 $ADDRV6" ;;
+        "connectionmigration") TEST_PARAMS="$TEST_PARAMS -p 443:4433 -4 $ADDRV4 -6 $ADDRV6" ;;
         *) TEST_PARAMS="$TEST_PARAMS -p 443" ;;
     esac
-    TEST_PARAMS="$TEST_PARAMS -p 443 -V -0 -d 180000 -G c4"
+    TEST_PARAMS="$TEST_PARAMS -V -0 -d 180000 -G c4"
     echo "Starting picoquic server ..."
     echo "TEST_PARAMS: $TEST_PARAMS"
     picoquic/picoquicdemo $TEST_PARAMS
