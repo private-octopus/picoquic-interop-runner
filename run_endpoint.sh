@@ -129,9 +129,9 @@ if [ "$ROLE" == "client" ]; then
 ### Server side ###
 elif [ "$ROLE" == "server" ]; then
     echo "Starting picoquic server for test:" $TESTCASE
-    ADDRV4=`getent ahostv4 server4 | grep DGRAM | head -n1 | awk '{print $1}'`
+    ADDRV4=`getent ahostsv4 server4 | grep DGRAM | head -n1 | awk '{print $1}'`
     echo "IPv4 server address: $ADDRV4"
-    ADDRV6=`getent ahostv6 server6 | grep DGRAM | head -n1 | awk '{print $1}'`
+    ADDRV6=`getent ahostsv6 server6 | grep DGRAM | head -n1 | awk '{print $1}'`
     echo "IPv6 server address: $ADDRV6"
     TEST_PARAMS="$SERVER_PARAMS -8 -w ./www -L -l /logs/server_log.txt"
     TEST_PARAMS="$TEST_PARAMS -q /logs/qlog" 
