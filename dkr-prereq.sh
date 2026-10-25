@@ -1,14 +1,7 @@
-# !/bin/bash.sh
+#!/bin/bash
+set -e
 export DEBIAN_FRONTEND=noninteractive
-ln -fs /usr/share/zoneinfo?america/New_York /etc/localtime
-apt-get install -y tzdata
-dkpg-reconfigure
+ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
 apt-get -y update
-apt-get -y -q install build-essential
-apt-get -y -q install git
-apt-get -y -q install cmake
-apt-get -y -q install libssl-dev
-apt-get -y -q install pkg-config
-
-
-
+apt-get -y -q install tzdata build-essential git cmake libssl-dev pkg-config
+dpkg-reconfigure -f noninteractive tzdata
