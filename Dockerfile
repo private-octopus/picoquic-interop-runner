@@ -26,7 +26,7 @@ RUN ./dkr-install.sh
 FROM martenseemann/quic-network-simulator-endpoint:latest
 USER root
 WORKDIR /
-COPY --from=builder /picoquic /picoquic
+COPY --from=builder /picoquic/picoquicdemo /picoquic/picoquicdemo
 # copy run script and run it
 COPY run_endpoint.sh .
 RUN chmod +x run_endpoint.sh
